@@ -1,46 +1,19 @@
 package com.basicapi.crudexamplebasic.mapper;
 
 import java.util.List;
-import java.util.stream.Collectors;
-import org.springframework.stereotype.Component;
+import org.mapstruct.Mapper;
 import com.basicapi.crudexamplebasic.model.Product;
 import com.basicapi.crudexamplebasic.dto.ProductDto;
 
-@Component
-public class ProductMapper {
 
-    public Product toEntity(ProductDto productDto){
+@Mapper(componentModel = "spring")
+public interface ProductMapper {
 
-        return Product.builder()
-                .id(productDto.getId())
-                .name(productDto.getName())
-                .price(productDto.getPrice())
-                .quantity(productDto.getQuantity())
-                .build();
-    }
+    ProductDto toDto(Product product);
 
-    public List<Product> toEntity(List<ProductDto> productsDto){
+    List<ProductDto> toDto(List<Product> products);
 
-        return productsDto.stream()
-                .map(this::toEntity)
-                .collect(Collectors.toList());
-    }
+    Product toEntity(ProductDto productDto);
 
-    public ProductDto toDto(Product product){
-
-        return ProductDto.builder()
-                .id(product.getId())
-                .name(product.getName())
-                .price(product.getPrice())
-                .quantity(product.getQuantity())
-                .build();
-
-    }
-
-    public List<ProductDto> toDto(List<Product> products){
-
-        return products.stream()
-                .map(this::toDto)
-                .collect(Collectors.toList());
-    }
+    List<Product> toEntity(List<ProductDto> productsDto);
 }
