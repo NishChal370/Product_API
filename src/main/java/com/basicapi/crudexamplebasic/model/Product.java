@@ -1,7 +1,7 @@
 package com.basicapi.crudexamplebasic.model;
 
-import lombok.Builder;
 import lombok.Data;
+import lombok.Builder;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Entity;

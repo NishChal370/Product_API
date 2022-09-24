@@ -1,8 +1,7 @@
 package com.basicapi.crudexamplebasic.dto;
 
-import lombok.Builder;
 import lombok.Data;
-
+import lombok.Builder;
 import javax.persistence.Id;
 
 @Data

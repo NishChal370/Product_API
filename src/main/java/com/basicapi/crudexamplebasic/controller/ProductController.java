@@ -1,6 +1,8 @@
 package com.basicapi.crudexamplebasic.controller;
 
 import java.util.List;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.basicapi.crudexamplebasic.model.Product;
 import com.basicapi.crudexamplebasic.dto.ProductDto;
@@ -10,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 
 @RestController
+@RequestMapping("/api")
 public class ProductController {
 
     @Autowired
@@ -19,52 +22,52 @@ public class ProductController {
     private ProductService productService;
 
     @PostMapping("/product")
-    public ProductDto saveOrUpdate(@RequestBody ProductDto productDto){
+    public ResponseEntity<ProductDto> saveOrUpdate(@RequestBody ProductDto productDto){
         Product product = mapper.toEntity(productDto);
         Product savedProduct = productService.saveOrUpdate(product);
 
-        return mapper.toDto(savedProduct);
+        return new ResponseEntity<ProductDto>(mapper.toDto(savedProduct), HttpStatus.CREATED);
     }
 
     @PostMapping("/products")
-    public List<ProductDto> saveAll(@RequestBody List<ProductDto> productsDto){
+    public ResponseEntity<List<ProductDto>> saveAll(@RequestBody List<ProductDto> productsDto){
         List<Product>  products = mapper.toEntity(productsDto);
         List<Product> savedProducts = productService.saveAll(products);
 
-        return mapper.toDto(savedProducts);
+        return new ResponseEntity<List<ProductDto>>(mapper.toDto(savedProducts), HttpStatus.CREATED);
     }
 
     @GetMapping("/products")
-    public List<ProductDto> getAll(){
+    public ResponseEntity<List<ProductDto>> getAll(){
         List<Product> products = productService.getAll();
 
-        return  mapper.toDto(products);
+        return new ResponseEntity<List<ProductDto>>(mapper.toDto(products), HttpStatus.FOUND);
     }
 
     @GetMapping("/product/{id}")
-    public ProductDto get(@PathVariable Integer id){
+    public ResponseEntity<ProductDto> get(@PathVariable Integer id){
         Product searchedProduct = productService.get(id);
 
-        return mapper.toDto(searchedProduct);
+        return new ResponseEntity<ProductDto>(mapper.toDto(searchedProduct), HttpStatus.FOUND);
     }
 
     @GetMapping("/product")
-    public ProductDto getByName(@RequestParam("name") String name){
+    public ResponseEntity<ProductDto> getByName(@RequestParam("name") String name){
         Product searchedProduct = productService.getByName(name);
 
-        return mapper.toDto(searchedProduct);
+        return new ResponseEntity<ProductDto>(mapper.toDto(searchedProduct), HttpStatus.FOUND);
     }
 
     @DeleteMapping("/product/{id}")
-    public String delete(@PathVariable Integer id){
+    public ResponseEntity<String> delete(@PathVariable Integer id){
 
-        return productService.delete(id);
+        return new ResponseEntity<String>(productService.delete(id), HttpStatus.ACCEPTED);
     }
 
     @DeleteMapping("/products")
-    public String deleteAll(){
+    public ResponseEntity<String> deleteAll(){
 
-        return productService.deleteAll();
+        return new ResponseEntity<>(productService.deleteAll(), HttpStatus.ACCEPTED);
     }
 
 }
