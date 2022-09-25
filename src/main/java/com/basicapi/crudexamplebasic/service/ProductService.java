@@ -35,7 +35,7 @@ public class ProductService {
         return productRepository.findById(id).orElse(null);
     }
 
-    public  Product getByName(String name){
+    public Product get(String name){
 
         return productRepository.findByName(name);
     }

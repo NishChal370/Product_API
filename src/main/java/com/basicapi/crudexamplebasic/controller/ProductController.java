@@ -53,7 +53,7 @@ public class ProductController {
 
     @GetMapping("/product")
     public ResponseEntity<ProductDto> getByName(@RequestParam("name") String name){
-        Product searchedProduct = productService.getByName(name);
+        Product searchedProduct = productService.get(name);
 
         return new ResponseEntity<ProductDto>(mapper.toDto(searchedProduct), HttpStatus.FOUND);
     }
